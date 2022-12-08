@@ -3,8 +3,8 @@
 /**
  * read a byte from given port number
  */
-uint8 inportb(uint16 port) {
-  uint8 ret;
+uint8_t inportb(uint16_t port) {
+  uint8_t ret;
   asm volatile("inb %1, %0" : "=a"(ret) : "Nd"(port));
   return ret;
 }
@@ -12,15 +12,15 @@ uint8 inportb(uint16 port) {
 /**
  * write a given byte to given port number
  */
-void outportb(uint16 port, uint8 val) {
+void outportb(uint16_t port, uint8_t val) {
   asm volatile("outb %0, %1" : : "a"(val), "Nd"(port));
 }
 
 /**
  * read 2 bytes(short) from given port number
  */
-uint16 inports(uint16 port) {
-  uint16 rv;
+uint16_t inports(uint16_t port) {
+  uint16_t rv;
   asm volatile("inw %1, %0" : "=a"(rv) : "dN"(port));
   return rv;
 }
@@ -28,15 +28,15 @@ uint16 inports(uint16 port) {
 /**
  * write given 2 bytes(short) to given port number
  */
-void outports(uint16 port, uint16 data) {
+void outports(uint16_t port, uint16_t data) {
   asm volatile("outw %0, %1" : : "a"(data), "Nd"(port));
 }
 
 /**
  * read 4 bytes(long) from given port number
  */
-uint32 inportl(uint16 port) {
-  uint32 rv;
+uint32_t inportl(uint16_t port) {
+  uint32_t rv;
   asm volatile("inl %%dx, %%eax" : "=a"(rv) : "dN"(port));
   return rv;
 }
@@ -44,6 +44,6 @@ uint32 inportl(uint16 port) {
 /**
  * write given 4 bytes(long) to given port number
  */
-void outportl(uint16 port, uint32 data) {
+void outportl(uint16_t port, uint32_t data) {
   asm volatile("outl %%eax, %%dx" : : "dN"(port), "a"(data));
 }

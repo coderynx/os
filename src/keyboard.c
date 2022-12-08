@@ -7,8 +7,8 @@
 #include "string.h"
 #include "types.h"
 
-static BOOL g_caps_lock = FALSE;
-static BOOL g_shift_pressed = FALSE;
+static bool_t g_caps_lock = FALSE;
+static bool_t g_shift_pressed = FALSE;
 char g_ch = 0, g_scan_code = 0;
 
 // see scan codes defined in keyboard.h for index

@@ -4,19 +4,19 @@
 #include "types.h"
 #include "vga.h"
 
-static uint16 *g_vga_buffer;
+static uint16_t *g_vga_buffer;
 // index for video buffer array
-static uint32 g_vga_index;
+static uint32_t g_vga_index;
 // cursor positions
-static uint8 cursor_pos_x = 0, cursor_pos_y = 0;
+static uint8_t cursor_pos_x = 0, cursor_pos_y = 0;
 // fore & back color values
-uint8 g_fore_color = COLOR_WHITE, g_back_color = COLOR_BLACK;
-static uint16 g_temp_pages[MAXIMUM_PAGES][VGA_TOTAL_ITEMS];
-uint32 g_current_temp_page = 0;
+uint8_t g_fore_color = COLOR_WHITE, g_back_color = COLOR_BLACK;
+static uint16_t g_temp_pages[MAXIMUM_PAGES][VGA_TOTAL_ITEMS];
+uint32_t g_current_temp_page = 0;
 
 // clear video buffer array
 void console_clear(VGA_COLOR_TYPE fore_color, VGA_COLOR_TYPE back_color) {
-  uint32 i;
+  uint32_t i;
 
   for (i = 0; i < VGA_TOTAL_ITEMS; i++) {
     g_vga_buffer[i] = vga_item_entry(NULL, fore_color, back_color);
@@ -29,7 +29,7 @@ void console_clear(VGA_COLOR_TYPE fore_color, VGA_COLOR_TYPE back_color) {
 
 // initialize console
 void console_init(VGA_COLOR_TYPE fore_color, VGA_COLOR_TYPE back_color) {
-  g_vga_buffer = (uint16 *)VGA_ADDRESS;
+  g_vga_buffer = (uint16_t *)VGA_ADDRESS;
   g_fore_color = fore_color;
   g_back_color = back_color;
   cursor_pos_x = 0;
@@ -42,7 +42,7 @@ void set_fore_color(VGA_COLOR_TYPE fore_color) { g_fore_color = fore_color; }
 void set_back_color(VGA_COLOR_TYPE back_color) { g_back_color = back_color; }
 
 void console_scroll(int type) {
-  uint32 i;
+  uint32_t i;
   if (type == SCROLL_UP) {
     // scroll up
     if (g_current_temp_page > 0)
@@ -65,7 +65,7 @@ void console_scroll(int type) {
 increase vga_index by width of vga width
 */
 static void console_newline() {
-  uint32 i;
+  uint32_t i;
 
   if (cursor_pos_y >= VGA_HEIGHT) {
     for (i = 0; i < VGA_TOTAL_ITEMS; i++)
@@ -129,7 +129,7 @@ void console_ungetchar() {
 }
 
 // revert back the printed character until n characters
-void console_ungetchar_bound(uint8 n) {
+void console_ungetchar_bound(uint8_t n) {
   if (((g_vga_index % VGA_WIDTH) > n) && (n > 0)) {
     g_vga_buffer[g_vga_index--] = vga_item_entry(0, g_fore_color, g_back_color);
     if (cursor_pos_x >= n) {
@@ -147,7 +147,7 @@ void console_ungetchar_bound(uint8 n) {
   g_vga_buffer[g_vga_index] = vga_item_entry(0, g_fore_color, g_back_color);
 }
 
-void console_gotoxy(uint16 x, uint16 y) {
+void console_gotoxy(uint16_t x, uint16_t y) {
   g_vga_index = (80 * y) + x;
   cursor_pos_x = x;
   cursor_pos_y = y;
@@ -156,7 +156,7 @@ void console_gotoxy(uint16 x, uint16 y) {
 
 // print string by calling print_char
 void console_putstr(const char *str) {
-  uint32 index = 0;
+  uint32_t index = 0;
   while (str[index]) {
     if (str[index] == '\n')
       console_newline();
@@ -373,7 +373,7 @@ void getstr(char *buffer) {
 }
 
 // read string from console, and erase or go back util bound occurs
-void getstr_bound(char *buffer, uint8 bound) {
+void getstr_bound(char *buffer, uint8_t bound) {
   if (!buffer)
     return;
   while (1) {

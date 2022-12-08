@@ -16,8 +16,8 @@ int mouse_getx() { return g_mouse_x_pos; }
 
 int mouse_gety() { return g_mouse_y_pos; }
 
-void mouse_wait(BOOL type) {
-  uint32 time_out = 100000;
+void mouse_wait(bool_t type) {
+  uint32_t time_out = 100000;
   if (type == FALSE) {
     // suspend until status is 1
     while (time_out--) {
@@ -35,7 +35,7 @@ void mouse_wait(BOOL type) {
   }
 }
 
-void mouse_write(uint8 data) {
+void mouse_write(uint8_t data) {
   // sending write command
   mouse_wait(TRUE);
   outportb(PS2_CMD_PORT, 0xD4);
@@ -44,7 +44,7 @@ void mouse_write(uint8 data) {
   outportb(MOUSE_DATA_PORT, data);
 }
 
-uint8 mouse_read() {
+uint8_t mouse_read() {
   mouse_wait(FALSE);
   return inportb(MOUSE_DATA_PORT);
 }
@@ -72,7 +72,7 @@ void get_mouse_status(char status_byte, MOUSE_STATUS *status) {
 void stop_mouse() {
   // disable packet streaming to stop receiving mouse data
   mouse_write(MOUSE_CMD_DISABLE_PACKET_STREAMING);
-  uint8 status = mouse_read();
+  uint8_t status = mouse_read();
   if (status != MOUSE_ACKNOWLEDGE) {
     printf("error: failed to disable mouse packet streaming\n");
     return;
@@ -99,7 +99,7 @@ void print_mouse_info() {
 }
 
 void mouse_handler(REGISTERS *r) {
-  static uint8 mouse_cycle = 0;
+  static uint8_t mouse_cycle = 0;
   static char mouse_byte[3];
 
   switch (mouse_cycle) {
@@ -139,8 +139,8 @@ void mouse_handler(REGISTERS *r) {
 /**
  * available rates 10, 20, 40, 60, 80, 100, 200
  */
-void set_mouse_rate(uint8 rate) {
-  uint8 status;
+void set_mouse_rate(uint8_t rate) {
+  uint8_t status;
 
   outportb(MOUSE_DATA_PORT, MOUSE_CMD_SAMPLE_RATE);
   status = mouse_read();
@@ -157,7 +157,7 @@ void set_mouse_rate(uint8 rate) {
 }
 
 void mouse_init() {
-  uint8 status;
+  uint8_t status;
 
   g_mouse_x_pos = 5;
   g_mouse_y_pos = 2;

@@ -22,14 +22,14 @@
        // https://wiki.osdev.org/%228042%22_PS/2_Controller
 
 typedef struct {
-  uint8 left_button : 1;
-  uint8 right_button : 1;
-  uint8 middle_button : 1;
-  uint8 always_1 : 1;
-  uint8 x_sign : 1;
-  uint8 y_sign : 1;
-  uint8 x_overflow : 1;
-  uint8 y_overflow : 1;
+  uint8_t left_button : 1;
+  uint8_t right_button : 1;
+  uint8_t middle_button : 1;
+  uint8_t always_1 : 1;
+  uint8_t x_sign : 1;
+  uint8_t y_sign : 1;
+  uint8_t x_overflow : 1;
+  uint8_t y_overflow : 1;
 } MOUSE_STATUS;
 
 void mouse_init();

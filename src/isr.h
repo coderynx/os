@@ -7,13 +7,14 @@
 
 #include "types.h"
 
-#define NO_INTERRUPT_HANDLERS    256
+#define NO_INTERRUPT_HANDLERS 256
 
 typedef struct {
-    uint32 ds;
-    uint32 edi, esi, ebp, esp, ebx, edx, ecx, eax;  // pushed by pusha
-    uint32 int_no, err_code;                        // interrupt number and error code
-    uint32 eip, cs, eflags, useresp, ss;            // pushed by the processor automatically
+  uint32_t ds;
+  uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax; // pushed by pusha
+  uint32_t int_no, err_code; // interrupt number and error code
+  uint32_t eip, cs, eflags, useresp,
+      ss; // pushed by the processor automatically
 } REGISTERS;
 
 // ISR function prototype
@@ -26,7 +27,7 @@ void isr_register_interrupt_handler(int num, ISR handler);
 
 /*
  * turn off current interrupt
-*/
+ */
 void isr_end_interrupt(int num);
 
 /**
@@ -40,7 +41,6 @@ void isr_exception_handler(REGISTERS reg);
  * being called in irq.asm
  */
 void isr_irq_handler(REGISTERS *reg);
-
 
 // defined in exception.asm
 extern void exception_0();
@@ -96,23 +96,22 @@ extern void irq_14();
 extern void irq_15();
 
 // IRQ default constants
-#define IRQ_BASE            0x20
-#define IRQ0_TIMER          0x00
-#define IRQ1_KEYBOARD       0x01
-#define IRQ2_CASCADE        0x02
-#define IRQ3_SERIAL_PORT2   0x03
-#define IRQ4_SERIAL_PORT1   0x04
-#define IRQ5_RESERVED       0x05
+#define IRQ_BASE 0x20
+#define IRQ0_TIMER 0x00
+#define IRQ1_KEYBOARD 0x01
+#define IRQ2_CASCADE 0x02
+#define IRQ3_SERIAL_PORT2 0x03
+#define IRQ4_SERIAL_PORT1 0x04
+#define IRQ5_RESERVED 0x05
 #define IRQ6_DISKETTE_DRIVE 0x06
-#define IRQ7_PARALLEL_PORT  0x07
-#define IRQ8_CMOS_CLOCK     0x08
-#define IRQ9_CGA            0x09
-#define IRQ10_RESERVED      0x0A
-#define IRQ11_RESERVED      0x0B
-#define IRQ12_AUXILIARY     0x0C
-#define IRQ13_FPU           0x0D
-#define IRQ14_HARD_DISK     0x0E
-#define IRQ15_RESERVED      0x0F
-
+#define IRQ7_PARALLEL_PORT 0x07
+#define IRQ8_CMOS_CLOCK 0x08
+#define IRQ9_CGA 0x09
+#define IRQ10_RESERVED 0x0A
+#define IRQ11_RESERVED 0x0B
+#define IRQ12_AUXILIARY 0x0C
+#define IRQ13_FPU 0x0D
+#define IRQ14_HARD_DISK 0x0E
+#define IRQ15_RESERVED 0x0F
 
 #endif

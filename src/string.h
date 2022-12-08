@@ -3,11 +3,11 @@
 
 #include "types.h"
 
-void *memset(void *dst, char c, uint32 n);
+void *memset(void *dst, char c, uint32_t n);
 
-void *memcpy(void *dst, const void *src, uint32 n);
+void *memcpy(void *dst, const void *src, uint32_t n);
 
-int memcmp(uint8 *s1, uint8 *s2, uint32 n);
+int memcmp(uint8_t *s1, uint8_t *s2, uint32_t n);
 
 int strlen(const char *s);
 
@@ -31,4 +31,3 @@ char *strstr(const char *in, const char *str);
 // char* sprintf(const char *format, ...);
 
 #endif
-

@@ -25,9 +25,9 @@ void console_putchar(char ch);
 
 void console_ungetchar();
 
-void console_ungetchar_bound(uint8 n);
+void console_ungetchar_bound(uint8_t n);
 
-void console_gotoxy(uint16 x, uint16 y);
+void console_gotoxy(uint16_t x, uint16_t y);
 
 void console_putstr(const char *str);
 
@@ -37,6 +37,6 @@ int sprintf(char *, const char *, ...);
 
 void getstr(char *buffer);
 
-void getstr_bound(char *buffer, uint8 bound);
+void getstr_bound(char *buffer, uint8_t bound);
 
 #endif

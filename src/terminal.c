@@ -10,24 +10,25 @@
 #define BRAND_QEMU 1
 #define BRAND_VBOX 2
 
-void __cpuid(uint32 type, uint32 *eax, uint32 *ebx, uint32 *ecx, uint32 *edx) {
+void __cpuid(uint32_t type, uint32_t *eax, uint32_t *ebx, uint32_t *ecx,
+             uint32_t *edx) {
   asm volatile("cpuid"
                : "=a"(*eax), "=b"(*ebx), "=c"(*ecx), "=d"(*edx)
                : "0"(type)); // put the type into eax
 }
 
 int cpuid_info(int print) {
-  uint32 brand[12];
-  uint32 eax, ebx, ecx, edx;
-  uint32 type;
+  uint32_t brand[12];
+  uint32_t eax, ebx, ecx, edx;
+  uint32_t type;
 
   memset(brand, 0, sizeof(brand));
-  __cpuid(0x80000002, (uint32 *)brand + 0x0, (uint32 *)brand + 0x1,
-          (uint32 *)brand + 0x2, (uint32 *)brand + 0x3);
-  __cpuid(0x80000003, (uint32 *)brand + 0x4, (uint32 *)brand + 0x5,
-          (uint32 *)brand + 0x6, (uint32 *)brand + 0x7);
-  __cpuid(0x80000004, (uint32 *)brand + 0x8, (uint32 *)brand + 0x9,
-          (uint32 *)brand + 0xa, (uint32 *)brand + 0xb);
+  __cpuid(0x80000002, (uint32_t *)brand + 0x0, (uint32_t *)brand + 0x1,
+          (uint32_t *)brand + 0x2, (uint32_t *)brand + 0x3);
+  __cpuid(0x80000003, (uint32_t *)brand + 0x4, (uint32_t *)brand + 0x5,
+          (uint32_t *)brand + 0x6, (uint32_t *)brand + 0x7);
+  __cpuid(0x80000004, (uint32_t *)brand + 0x8, (uint32_t *)brand + 0x9,
+          (uint32_t *)brand + 0xa, (uint32_t *)brand + 0xb);
 
   if (print) {
     printf("Brand: %s\n", brand);
@@ -44,7 +45,7 @@ int cpuid_info(int print) {
   return BRAND_VBOX;
 }
 
-BOOL is_echo(char *b) {
+bool_t is_echo(char *b) {
   if ((b[0] == 'e') && (b[1] == 'c') && (b[2] == 'h') && (b[3] == 'o'))
     if (b[4] == ' ' || b[4] == '\0')
       return TRUE;
