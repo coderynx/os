@@ -46,10 +46,7 @@ char *exception_messages[32] = {"Division By Zero",
  * register given handler to interrupt handlers at given num
  */
 void isr_register_interrupt_handler(int num, ISR handler) {
-
   LOG_INFO("Registered %d interrupt handler", num);
-  printf("Registered %d interrupt handler", num);
-
   if (num < NO_INTERRUPT_HANDLERS)
     g_interrupt_handlers[num] = handler;
 }

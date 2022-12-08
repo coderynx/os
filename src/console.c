@@ -287,6 +287,75 @@ void printf(const char *format, ...) {
   va_end(args);
 }
 
+int sprintf(char *buffer, const char *format, ...) {
+  va_list args;
+  va_start(args, format);
+
+  char buf[32];
+  memset(buf, 0, sizeof(buf));
+
+  char c;
+  int i = 0;
+  while ((c = *format++) != 0) {
+    if (c != '%') {
+      buffer[i++] = c;
+    } else {
+      char *p, *p2;
+      int pad0 = 0, pad = 0;
+
+      c = *format++;
+      if (c == '0') {
+        pad0 = 1;
+        c = *format++;
+      }
+
+      if (c >= '0' && c <= '9') {
+        pad = c - '0';
+        c = *format++;
+      }
+
+      switch (c) {
+      case 'd':
+      case 'u':
+      case 'x':
+        itoa(buf, c, va_arg(args, int));
+        p = buf;
+        goto string;
+        break;
+
+      case 's':
+        p = va_arg(args, char *);
+        if (!p) {
+          p = "(null)";
+        }
+
+      string:
+        for (p2 = p; *p2; p2++) {
+          ;
+        }
+        for (; p2 < p + pad; p2++) {
+          buffer[i++] = pad0 ? '0' : ' ';
+        }
+        while (*p) {
+          buffer[i++] = *p++;
+        }
+        break;
+
+      default:
+        buffer[i++] = va_arg(args, int);
+        break;
+      }
+    }
+  }
+
+  va_end(args);
+
+  // NULL-terminate the string
+  buffer[i] = 0;
+
+  return i;
+}
+
 // read string from console, but no backing
 void getstr(char *buffer) {
   if (!buffer)

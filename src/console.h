@@ -33,6 +33,7 @@ void console_putstr(const char *str);
 
 void vprintf(const char *, va_list);
 void printf(const char *, ...);
+int sprintf(char *, const char *, ...);
 
 void getstr(char *buffer);
 

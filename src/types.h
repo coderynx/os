@@ -12,6 +12,8 @@ typedef signed int sint32;
 typedef uint8 byte;
 typedef uint16 word;
 typedef uint32 dword;
+typedef uint32 uintptr;
+typedef uint32 size_t;
 
 typedef enum { FALSE = 0, TRUE = 1 } BOOL;
 

@@ -4,6 +4,7 @@
 #include "logger.h"
 #include "names.h"
 #include "string.h"
+#include "vga.h"
 
 #define BRAND_QEMU 1
 #define BRAND_VBOX 2
@@ -29,11 +30,11 @@ int cpuid_info(int print) {
 
   if (print) {
     printf("Brand: %s\n", brand);
-    for (type = 0; type < 4; type++) {
+    /*for (type = 0; type < 4; type++) {
       __cpuid(type, &eax, &ebx, &ecx, &edx);
       printf("type:0x%x, eax:0x%x, ebx:0x%x, ecx:0x%x, edx:0x%x\n", type, eax,
              ebx, ecx, edx);
-    }
+    }*/
   }
 
   if (strstr(brand, "QEMU") != NULL)
@@ -59,13 +60,24 @@ void shutdown() {
     outports(0x4004, 0x3400);
 }
 
-const char *shell = OS_NAME "_" OS_VERSION "# ";
 char buffer[255];
+
+void print_shell_prompt() {
+  set_fore_color(COLOR_BRIGHT_GREEN);
+  printf(OS_NAME);
+  set_fore_color(COLOR_WHITE);
+  printf(":");
+  set_fore_color(COLOR_BRIGHT_BLUE);
+  printf(OS_VERSION);
+  set_fore_color(COLOR_WHITE);
+  printf("# ");
+}
 
 void term_start() {
   printf("\n");
+  const char *shell = OS_NAME ":" OS_VERSION "# ";
   while (1) {
-    printf(shell);
+    print_shell_prompt();
     memset(buffer, 0, sizeof(buffer));
     getstr_bound(buffer, strlen(shell));
     if (strlen(buffer) == 0)
