@@ -18,7 +18,6 @@ void kmain() {
   console_init(COLOR_WHITE, COLOR_BLACK);
 
   LOG_INFO("Initializing coderynxOS...");
-  sleep(5);
   LOG_INFO("Boot successful");
 
   keyboard_init();
