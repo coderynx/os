@@ -2,6 +2,7 @@
 #include "console.h"
 #include "io_ports.h"
 #include "logger.h"
+#include "mouse.h"
 #include "names.h"
 #include "string.h"
 #include "vga.h"
@@ -60,6 +61,13 @@ void shutdown() {
     outports(0x4004, 0x3400);
 }
 
+void reset() {
+  int brand = cpuid_info(0);
+  // QEMU
+  if (brand == BRAND_QEMU)
+    outportb(0x64, 0xFE);
+}
+
 char buffer[255];
 
 void print_shell_prompt() {
@@ -74,7 +82,6 @@ void print_shell_prompt() {
 }
 
 void term_start() {
-  printf("\n");
   const char *shell = OS_NAME ":" OS_VERSION "# ";
   while (1) {
     print_shell_prompt();
@@ -86,11 +93,17 @@ void term_start() {
       cpuid_info(1);
     } else if (strcmp(buffer, "help") == 0) {
       printf(OS_NAME "@" OS_VERSION " Terminal\n");
-      printf("Commands: help, cpuid, echo, shutdown, testlog\n");
+      printf("Commands: help, cpuid, echo, reset, shutdown, testlog\n");
     } else if (is_echo(buffer)) {
       printf("%s\n", buffer + 5);
+    } else if (strcmp(buffer, "clear") == 0) {
+      console_clear(COLOR_WHITE, COLOR_BLACK);
     } else if (strcmp(buffer, "shutdown") == 0) {
       shutdown();
+    } else if (strcmp(buffer, "reset") == 0) {
+      reset();
+    } else if (strcmp(buffer, "mouse") == 0) {
+      mouse_init();
     } else if (strcmp(buffer, "testlog") == 0) {
       LOG_DEBUG("This is a debug");
       LOG_INFO("This is an info");
