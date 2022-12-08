@@ -52,8 +52,7 @@ Mkfile.old
 dkms.conf
 
 # Build directories
-obj/
-out/
+build/
 
 # General
 .DS_Store

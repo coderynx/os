@@ -2,6 +2,7 @@
 ASM = nasm
 CC = i686-elf-gcc
 LD = i686-elf-gcc
+EMU = qemu-system-i386
 
 # Directories
 SRC = src
@@ -27,22 +28,26 @@ ASM_OBJECTS := $(patsubst $(SRC)/%.asm, $(BUILD)/%.o, $(ASM_SOURCES))
 
 # Linking and running
 all: $(ASM_OBJECTS) $(OBJECTS)
-	@printf "[ linking... ]\n"
+	@printf "Linking...\n"
 	$(LD) $(LD_FLAGS) $^ -o $(TARGET)
-	@printf "\n[ Running QEMU... ]\n"
-	qemu-system-i386 -kernel $(TARGET)
+
+# Run
+run: all
+	@printf "Running...\n"
+	$(EMU) -kernel $(TARGET)
 
 # Assembly
-$(BUILD)/%.o : $(BUILD)/%.o $(SRC)/%.asm
-	@printf "[ assembling... ]\n"
+$(BUILD)/%.o : $(SRC)/%.asm
+	@printf "Assembling...\n"
 	@mkdir -p $(BUILD)
 	$(ASM) $(ASM_FLAGS) $< -o $@
 
 # C
 $(BUILD)/%.o: $(SRC)/%.c
-	@printf "[ compiling... ]\n"
+	@printf "Compiling...\n"
 	@mkdir -p $(BUILD)
 	$(CC) -I$(SRC) -c $(CC_FLAGS) $< -o $@	
 
 clean:
+	@printf "Cleaning...\n"
 	rm -rf $(BUILD)/*
