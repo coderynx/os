@@ -73,7 +73,7 @@ void term_start() {
     if (strcmp(buffer, "cpuid") == 0) {
       cpuid_info(1);
     } else if (strcmp(buffer, "help") == 0) {
-      printf(" Tiny OS Terminal\n");
+      printf(OS_NAME "@" OS_VERSION " Terminal\n");
       printf("Commands: help, cpuid, echo, shutdown, testlog\n");
     } else if (is_echo(buffer)) {
       printf("%s\n", buffer + 5);
