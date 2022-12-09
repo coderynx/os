@@ -13,13 +13,9 @@
 #define MOUSE_CMD_REQUEST_SINGLE_PACKET 0xEB
 #define MOUSE_CMD_STATUS 0xE9
 #define MOUSE_CMD_RESOLUTION 0xE8
-
 #define MOUSE_ACKNOWLEDGE 0xFA
-
-#define PS2_CMD_PORT 0x64 // read/write PS/2 command register
-#define MOUSE_DATA_PORT                                                        \
-  0x60 // PS/2 data port register see
-       // https://wiki.osdev.org/%228042%22_PS/2_Controller
+#define PS2_CMD_PORT 0x64
+#define MOUSE_DATA_PORT 0x60
 
 typedef struct {
   uint8_t left_button : 1;
@@ -33,7 +29,6 @@ typedef struct {
 } MOUSE_STATUS;
 
 void mouse_init();
-
 int mouse_getx();
 int mouse_gety();
 

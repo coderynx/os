@@ -1,7 +1,12 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
+#ifdef DEBUG
 #define LOG_DEBUG(format, ...) kern_log(LOG_LEVEL_DEBUG, format, ##__VA_ARGS__)
+#else
+#define LOG_DEBUG(format, ...)
+#endif
+
 #define LOG_INFO(format, ...) kern_log(LOG_LEVEL_INFO, format, ##__VA_ARGS__)
 #define LOG_WARN(format, ...) kern_log(LOG_LEVEL_WARN, format, ##__VA_ARGS__)
 #define LOG_ERROR(format, ...) kern_log(LOG_LEVEL_ERROR, format, ##__VA_ARGS__)

@@ -1,6 +1,4 @@
-
 #include "mouse.h"
-
 #include "8259_pic.h"
 #include "console.h"
 #include "idt.h"

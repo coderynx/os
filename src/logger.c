@@ -19,8 +19,6 @@ void kern_log(kern_log_level_t log_level, const char *format, ...) {
   case LOG_LEVEL_WARN:
     set_fore_color(COLOR_YELLOW);
     printf("[WARN]");
-    printf(": ");
-    vprintf(format, args);
     break;
   case LOG_LEVEL_ERROR:
     set_fore_color(COLOR_RED);

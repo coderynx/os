@@ -11,8 +11,8 @@ BUILD = ./build
 
 # Flags
 ASM_FLAGS = -f elf32
-CC_DEFINES = 
-CC_FLAGS = $(INCLUDE) $(CC_DEFINES) -m32 -std=gnu99 -ffreestanding -Wall -Wextra
+CC_DEFINES = -DDEBUG
+CC_FLAGS = $(CC_DEFINES) -m32 -std=gnu99 -ffreestanding -Wall -Wextra
 LD_FLAGS = -T $(CONFIG)/linker.ld -nostdlib
 
 # Final output file

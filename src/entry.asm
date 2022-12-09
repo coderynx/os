@@ -28,7 +28,6 @@ stack_top:
 section .text
     global _start
 
-
 ; define _start, aligned by linker.ld script
 _start:
     mov esp, stack_top

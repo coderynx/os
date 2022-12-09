@@ -84,6 +84,7 @@ void print_shell_prompt() {
 
 void term_start() {
   const char *shell = OS_NAME ":" OS_VERSION "# ";
+  printf("\nStarted shell session\n");
   while (1) {
     print_shell_prompt();
     memset(buffer, 0, sizeof(buffer));
