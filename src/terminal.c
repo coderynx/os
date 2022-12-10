@@ -5,6 +5,8 @@
 #include "mouse.h"
 #include "names.h"
 #include "string.h"
+#include "time.h"
+#include "types.h"
 #include "vga.h"
 
 #define BRAND_QEMU 1
@@ -84,7 +86,19 @@ void print_shell_prompt() {
 
 void term_start() {
   const char *shell = OS_NAME ":" OS_VERSION "# ";
-  printf("\nStarted shell session\n");
+
+  uint8_t hours;
+  uint8_t minutes;
+  uint8_t seconds;
+  uint8_t day_of_week;
+  uint8_t day;
+  uint8_t month;
+  uint8_t year;
+
+  get_time(&seconds, &minutes, &hours, &day_of_week, &day, &month, &year);
+  printf("\nStarted shell session at %d:%d:%d of %d-%d-%d\n", hours, minutes,
+         seconds, day, month, year);
+
   while (1) {
     print_shell_prompt();
     memset(buffer, 0, sizeof(buffer));

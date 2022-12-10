@@ -4,9 +4,9 @@
  * read a byte from given port number
  */
 uint8_t inportb(uint16_t port) {
-  uint8_t ret;
-  asm volatile("inb %1, %0" : "=a"(ret) : "Nd"(port));
-  return ret;
+  uint8_t value;
+  asm volatile("inb %1, %0" : "=a"(value) : "Nd"(port));
+  return value;
 }
 
 /**
