@@ -9,10 +9,11 @@
 
 #define NO_INTERRUPT_HANDLERS 256
 
-typedef struct {
+typedef struct
+{
   uint32_t ds;
   uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax; // pushed by pusha
-  uint32_t int_no, err_code; // interrupt number and error code
+  uint32_t int_no, err_code;                       // interrupt number and error code
   uint32_t eip, cs, eflags, useresp,
       ss; // pushed by the processor automatically
 } REGISTERS;

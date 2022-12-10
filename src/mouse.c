@@ -14,26 +14,34 @@ int mouse_getx() { return g_mouse_x_pos; }
 
 int mouse_gety() { return g_mouse_y_pos; }
 
-void mouse_wait(bool_t type) {
+void mouse_wait(bool_t type)
+{
   uint32_t time_out = 100000;
-  if (type == FALSE) {
+  if (type == FALSE)
+  {
     // suspend until status is 1
-    while (time_out--) {
-      if ((inb(PS2_CMD_PORT) & 1) == 1) {
+    while (time_out--)
+    {
+      if ((inb(PS2_CMD_PORT) & 1) == 1)
+      {
         return;
       }
     }
-    return;
-  } else {
-    while (time_out--) {
-      if ((inb(PS2_CMD_PORT) & 2) == 0) {
+  }
+  else
+  {
+    while (time_out--)
+    {
+      if ((inb(PS2_CMD_PORT) & 2) == 0)
+      {
         return;
       }
     }
   }
 }
 
-void mouse_write(uint8_t data) {
+void mouse_write(uint8_t data)
+{
   // sending write command
   mouse_wait(TRUE);
   outb(PS2_CMD_PORT, 0xD4);
@@ -42,12 +50,14 @@ void mouse_write(uint8_t data) {
   outb(MOUSE_DATA_PORT, data);
 }
 
-uint8_t mouse_read() {
+uint8_t mouse_read()
+{
   mouse_wait(FALSE);
   return inb(MOUSE_DATA_PORT);
 }
 
-void get_mouse_status(char status_byte, MOUSE_STATUS *status) {
+void get_mouse_status(char status_byte, MOUSE_STATUS *status)
+{
   memset(status, 0, sizeof(MOUSE_STATUS));
   if (status_byte & 0x01)
     status->left_button = 1;
@@ -67,11 +77,13 @@ void get_mouse_status(char status_byte, MOUSE_STATUS *status) {
     status->y_overflow = 1;
 }
 
-void stop_mouse() {
+void stop_mouse()
+{
   // disable packet streaming to stop receiving mouse data
   mouse_write(MOUSE_CMD_DISABLE_PACKET_STREAMING);
   uint8_t status = mouse_read();
-  if (status != MOUSE_ACKNOWLEDGE) {
+  if (status != MOUSE_ACKNOWLEDGE)
+  {
     printf("error: failed to disable mouse packet streaming\n");
     return;
   }
@@ -80,27 +92,33 @@ void stop_mouse() {
   isr_end_interrupt(IRQ_BASE + 12);
 }
 
-void print_mouse_info() {
+void print_mouse_info()
+{
   console_gotoxy(0, 0);
   printf("Mouse Demo X: %d, Y: %d\n", g_mouse_x_pos, g_mouse_y_pos);
-  if (g_status.left_button) {
+  if (g_status.left_button)
+  {
     printf("Left button clicked");
   }
-  if (g_status.right_button) {
+  if (g_status.right_button)
+  {
     printf("Right button clicked");
     stop_mouse();
     console_clear(COLOR_WHITE, COLOR_BLACK);
   }
-  if (g_status.middle_button) {
+  if (g_status.middle_button)
+  {
     printf("Middle button clicked");
   }
 }
 
-void mouse_handler(REGISTERS *r) {
+void mouse_handler(REGISTERS *r)
+{
   static uint8_t mouse_cycle = 0;
   static char mouse_byte[3];
 
-  switch (mouse_cycle) {
+  switch (mouse_cycle)
+  {
   case 0:
     mouse_byte[0] = mouse_read();
     get_mouse_status(mouse_byte[0], &g_status);
@@ -137,24 +155,28 @@ void mouse_handler(REGISTERS *r) {
 /**
  * available rates 10, 20, 40, 60, 80, 100, 200
  */
-void set_mouse_rate(uint8_t rate) {
+void set_mouse_rate(uint8_t rate)
+{
   uint8_t status;
 
   outb(MOUSE_DATA_PORT, MOUSE_CMD_SAMPLE_RATE);
   status = mouse_read();
-  if (status != MOUSE_ACKNOWLEDGE) {
+  if (status != MOUSE_ACKNOWLEDGE)
+  {
     printf("error: failed to send mouse sample rate command\n");
     return;
   }
   outb(MOUSE_DATA_PORT, rate);
   status = mouse_read();
-  if (status != MOUSE_ACKNOWLEDGE) {
+  if (status != MOUSE_ACKNOWLEDGE)
+  {
     printf("error: failed to send mouse sample rate data\n");
     return;
   }
 }
 
-void mouse_init() {
+void mouse_init()
+{
   uint8_t status;
 
   g_mouse_x_pos = 5;
@@ -191,7 +213,8 @@ void mouse_init() {
   // set mouse to use default settings
   mouse_write(MOUSE_CMD_SET_DEFAULTS);
   status = mouse_read();
-  if (status != MOUSE_ACKNOWLEDGE) {
+  if (status != MOUSE_ACKNOWLEDGE)
+  {
     printf("error: failed to set default mouse settings\n");
     return;
   }
@@ -199,7 +222,8 @@ void mouse_init() {
   // enable packet streaming to receive
   mouse_write(MOUSE_CMD_ENABLE_PACKET_STREAMING);
   status = mouse_read();
-  if (status != MOUSE_ACKNOWLEDGE) {
+  if (status != MOUSE_ACKNOWLEDGE)
+  {
     printf("error: failed to enable mouse packet streaming\n");
     return;
   }

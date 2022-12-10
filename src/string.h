@@ -27,7 +27,4 @@ char lower(char c);
 void itoa(char *buf, int base, int d);
 
 char *strstr(const char *in, const char *str);
-
-// char* sprintf(const char *format, ...);
-
 #endif

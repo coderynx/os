@@ -9,16 +9,18 @@
 
 #define NO_IDT_DESCRIPTORS 256
 
-typedef struct {
-  uint16_t base_low; // lower 16 bits 0-15 of the address to jump to when this
-                     // interrupt fires
+typedef struct
+{
+  uint16_t base_low;         // lower 16 bits 0-15 of the address to jump to when this
+                             // interrupt fires
   uint16_t segment_selector; // code segment selector in GDT
   uint8_t zero;              // unused, always be zero
   uint8_t type;              // types trap, interrupt gates
   uint16_t base_high;        // upper 16 bits 16-31 of the address to jump to
 } __attribute__((packed)) IDT;
 
-typedef struct {
+typedef struct
+{
   uint16_t limit;        // limit size of all IDT segments
   uint32_t base_address; // base address of the first IDT segment
 } __attribute__((packed)) IDT_PTR;

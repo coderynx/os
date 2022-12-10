@@ -36,6 +36,11 @@ run: all
 	@printf "Running...\n"
 	$(EMU) -kernel $(TARGET)
 
+debug: all
+	@printf "Running...\n"
+	$(EMU) -s -S -kernel $(TARGET) &
+	$(GDB) -ex "target remote localhost:1234" $(TARGET)
+
 # Assembly
 $(BUILD)/%.o : $(SRC)/%.asm
 	@printf "Assembling...\n"

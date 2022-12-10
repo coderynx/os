@@ -3,7 +3,8 @@
 #include "types.h"
 
 uint16_t vga_item_entry(uint8_t ch, VGA_COLOR_TYPE fore_color,
-                        VGA_COLOR_TYPE back_color) {
+                        VGA_COLOR_TYPE back_color)
+{
   uint16_t ax = 0;
   uint8_t ah = 0, al = 0;
 
@@ -18,7 +19,8 @@ uint16_t vga_item_entry(uint8_t ch, VGA_COLOR_TYPE fore_color,
   return ax;
 }
 
-void vga_set_cursor_pos(uint8_t x, uint8_t y) {
+void vga_set_cursor_pos(uint8_t x, uint8_t y)
+{
   // The screen is 80 characters wide...
   uint16_t cursorLocation = y * VGA_WIDTH + x;
   outb(0x3D4, 14);
@@ -27,7 +29,8 @@ void vga_set_cursor_pos(uint8_t x, uint8_t y) {
   outb(0x3D5, cursorLocation);
 }
 
-void vga_disable_cursor() {
+void vga_disable_cursor()
+{
   outb(0x3D4, 10);
   outb(0x3D5, 32);
 }

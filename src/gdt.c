@@ -10,7 +10,8 @@ GDT_PTR g_gdt_ptr;
  * fill entries of GDT
  */
 void gdt_set_entry(int index, uint32_t base, uint32_t limit, uint8_t access,
-                   uint8_t gran) {
+                   uint8_t gran)
+{
   GDT *this = &g_gdt[index];
 
   this->segment_limit = limit & 0xFFFF;
@@ -21,11 +22,12 @@ void gdt_set_entry(int index, uint32_t base, uint32_t limit, uint8_t access,
   this->granularity = (limit >> 16) & 0x0F;
   this->granularity = this->granularity | (gran & 0xF0);
 
-  this->base_high = (base >> 24 & 0xFF);
+  this->base_high = (base >> 24) & 0xFF;
 }
 
 // initialize GDT
-void gdt_init() {
+void gdt_init()
+{
   g_gdt_ptr.limit = sizeof(g_gdt) - 1;
   g_gdt_ptr.base_address = (uint32_t)g_gdt;
 
