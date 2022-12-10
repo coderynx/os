@@ -1,7 +1,7 @@
 #ifndef TIME_H
 #define TIME_H
 
-#include <types.h>
+#include "types.h"
 
 // CMOS registers
 #define CMOS_ADDRESS 0x0070
@@ -19,7 +19,16 @@
 // Flag to indicate if CMOS registers use binary or BCD format
 #define CMOS_BINARY 0x04
 
-void get_time(uint8_t *, uint8_t *, uint8_t *, uint8_t *, uint8_t *, uint8_t *,
-              uint8_t *);
+typedef struct {
+  uint8_t seconds;
+  uint8_t minutes;
+  uint8_t hours;
+  uint8_t day_of_week;
+  uint8_t day_of_month;
+  uint8_t month;
+  uint8_t year;
+} time_t;
+
+time_t get_time(void);
 
 #endif

@@ -87,17 +87,9 @@ void print_shell_prompt() {
 void term_start() {
   const char *shell = OS_NAME ":" OS_VERSION "# ";
 
-  uint8_t hours;
-  uint8_t minutes;
-  uint8_t seconds;
-  uint8_t day_of_week;
-  uint8_t day;
-  uint8_t month;
-  uint8_t year;
-
-  get_time(&seconds, &minutes, &hours, &day_of_week, &day, &month, &year);
-  printf("\nStarted shell session at %d:%d:%d of %d-%d-%d\n", hours, minutes,
-         seconds, day, month, year);
+  time_t time = get_time();
+  printf("\nStarted shell session at %d:%d:%d of %d-%d-%d\n", time.hours,
+         time.minutes, time.seconds, time.day_of_month, time.month, time.year);
 
   while (1) {
     print_shell_prompt();
@@ -109,7 +101,7 @@ void term_start() {
       cpuid_info(1);
     } else if (strcmp(buffer, "help") == 0) {
       printf(OS_NAME "@" OS_VERSION " Terminal\n");
-      printf("Commands: help, cpuid, echo, reset, shutdown, testlog\n");
+      printf("Commands: help, cpuid, echo, reset, shutdown, time, testlog\n");
     } else if (is_echo(buffer)) {
       printf("%s\n", buffer + 5);
     } else if (strcmp(buffer, "clear") == 0) {
@@ -120,6 +112,9 @@ void term_start() {
       reset();
     } else if (strcmp(buffer, "mouse") == 0) {
       mouse_init();
+    } else if (strcmp(buffer, "time") == 0) {
+      time = get_time();
+      printf("Time: %d:%d:%d\n", time.hours, time.minutes, time.seconds);
     } else if (strcmp(buffer, "testlog") == 0) {
       LOG_DEBUG("This is a debug");
       LOG_INFO("This is an info");
