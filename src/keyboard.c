@@ -27,10 +27,10 @@ static int get_scancode() {
   // get scancode until status is on(key pressed)
   for (i = 1000; i > 0; i++) {
     // Check if scan code is ready
-    if ((inportb(KEYBOARD_STATUS_PORT) & 1) == 0)
+    if ((inb(KEYBOARD_STATUS_PORT) & 1) == 0)
       continue;
     // Get the scan code
-    scancode = inportb(KEYBOARD_DATA_PORT);
+    scancode = inb(KEYBOARD_DATA_PORT);
     break;
   }
   if (i > 0)

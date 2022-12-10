@@ -6,12 +6,12 @@
 /**
  * read a byte from given port number
  */
-uint8_t inportb(uint16_t port);
+uint8_t inb(uint16_t port);
 
 /**
  * write a given byte to given port number
  */
-void outportb(uint16_t port, uint8_t val);
+void outb(uint16_t port, uint8_t val);
 
 /**
  * read 2 bytes(short) from given port number

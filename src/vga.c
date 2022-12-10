@@ -21,13 +21,13 @@ uint16_t vga_item_entry(uint8_t ch, VGA_COLOR_TYPE fore_color,
 void vga_set_cursor_pos(uint8_t x, uint8_t y) {
   // The screen is 80 characters wide...
   uint16_t cursorLocation = y * VGA_WIDTH + x;
-  outportb(0x3D4, 14);
-  outportb(0x3D5, cursorLocation >> 8);
-  outportb(0x3D4, 15);
-  outportb(0x3D5, cursorLocation);
+  outb(0x3D4, 14);
+  outb(0x3D5, cursorLocation >> 8);
+  outb(0x3D4, 15);
+  outb(0x3D5, cursorLocation);
 }
 
 void vga_disable_cursor() {
-  outportb(0x3D4, 10);
-  outportb(0x3D5, 32);
+  outb(0x3D4, 10);
+  outb(0x3D5, 32);
 }

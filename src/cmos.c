@@ -2,11 +2,11 @@
 #include "io_ports.h"
 #include "types.h"
 
-// Read a byte from the specified CMOS register
+// Read a byte from the CMOS
 uint8_t read_cmos(uint8_t reg) {
   // Select the register to read from
-  outportb(CMOS_ADDRESS, reg);
+  outb(CMOS_ADDRESS, reg);
 
   // Read the value from the register
-  return inportb(CMOS_DATA);
+  return inb(CMOS_DATA);
 }

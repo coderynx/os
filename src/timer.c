@@ -18,11 +18,11 @@ void timer_set_frequency(uint16_t f) {
   g_freq_hz = f;
   uint16_t divisor = TIMER_INPUT_CLOCK_FREQUENCY / f;
   // set Mode 3 - Square Wave Mode
-  outportb(TIMER_COMMAND_PORT, 0b00110110);
+  outb(TIMER_COMMAND_PORT, 0b00110110);
   // set low byte
-  outportb(TIMER_CHANNEL_0_DATA_PORT, divisor & 0xFF);
+  outb(TIMER_CHANNEL_0_DATA_PORT, divisor & 0xFF);
   // set high byte
-  outportb(TIMER_CHANNEL_0_DATA_PORT, (divisor >> 8) & 0xFF);
+  outb(TIMER_CHANNEL_0_DATA_PORT, (divisor >> 8) & 0xFF);
 }
 
 void timer_handler(REGISTERS *r) {

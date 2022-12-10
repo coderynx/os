@@ -3,7 +3,7 @@
 /**
  * read a byte from given port number
  */
-uint8_t inportb(uint16_t port) {
+uint8_t inb(uint16_t port) {
   uint8_t value;
   asm volatile("inb %1, %0" : "=a"(value) : "Nd"(port));
   return value;
@@ -12,7 +12,7 @@ uint8_t inportb(uint16_t port) {
 /**
  * write a given byte to given port number
  */
-void outportb(uint16_t port, uint8_t val) {
+void outb(uint16_t port, uint8_t val) {
   asm volatile("outb %0, %1" : : "a"(val), "Nd"(port));
 }
 

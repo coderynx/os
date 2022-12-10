@@ -19,14 +19,14 @@ void mouse_wait(bool_t type) {
   if (type == FALSE) {
     // suspend until status is 1
     while (time_out--) {
-      if ((inportb(PS2_CMD_PORT) & 1) == 1) {
+      if ((inb(PS2_CMD_PORT) & 1) == 1) {
         return;
       }
     }
     return;
   } else {
     while (time_out--) {
-      if ((inportb(PS2_CMD_PORT) & 2) == 0) {
+      if ((inb(PS2_CMD_PORT) & 2) == 0) {
         return;
       }
     }
@@ -36,15 +36,15 @@ void mouse_wait(bool_t type) {
 void mouse_write(uint8_t data) {
   // sending write command
   mouse_wait(TRUE);
-  outportb(PS2_CMD_PORT, 0xD4);
+  outb(PS2_CMD_PORT, 0xD4);
   mouse_wait(TRUE);
   // finally write data to port
-  outportb(MOUSE_DATA_PORT, data);
+  outb(MOUSE_DATA_PORT, data);
 }
 
 uint8_t mouse_read() {
   mouse_wait(FALSE);
-  return inportb(MOUSE_DATA_PORT);
+  return inb(MOUSE_DATA_PORT);
 }
 
 void get_mouse_status(char status_byte, MOUSE_STATUS *status) {
@@ -140,13 +140,13 @@ void mouse_handler(REGISTERS *r) {
 void set_mouse_rate(uint8_t rate) {
   uint8_t status;
 
-  outportb(MOUSE_DATA_PORT, MOUSE_CMD_SAMPLE_RATE);
+  outb(MOUSE_DATA_PORT, MOUSE_CMD_SAMPLE_RATE);
   status = mouse_read();
   if (status != MOUSE_ACKNOWLEDGE) {
     printf("error: failed to send mouse sample rate command\n");
     return;
   }
-  outportb(MOUSE_DATA_PORT, rate);
+  outb(MOUSE_DATA_PORT, rate);
   status = mouse_read();
   if (status != MOUSE_ACKNOWLEDGE) {
     printf("error: failed to send mouse sample rate data\n");
@@ -164,10 +164,10 @@ void mouse_init() {
 
   // enable mouse device
   mouse_wait(TRUE);
-  outportb(PS2_CMD_PORT, 0xA8);
+  outb(PS2_CMD_PORT, 0xA8);
 
   // print mouse id
-  outportb(MOUSE_DATA_PORT, MOUSE_CMD_MOUSE_ID);
+  outb(MOUSE_DATA_PORT, MOUSE_CMD_MOUSE_ID);
   status = mouse_read();
   printf("mouse id: 0x%x\n", status);
 
@@ -178,15 +178,15 @@ void mouse_init() {
 
   // enable the interrupt
   mouse_wait(TRUE);
-  outportb(PS2_CMD_PORT, 0x20);
+  outb(PS2_CMD_PORT, 0x20);
   mouse_wait(FALSE);
   // get and set second bit
-  status = (inportb(MOUSE_DATA_PORT) | 2);
+  status = (inb(MOUSE_DATA_PORT) | 2);
   // write status to port
   mouse_wait(TRUE);
-  outportb(PS2_CMD_PORT, MOUSE_DATA_PORT);
+  outb(PS2_CMD_PORT, MOUSE_DATA_PORT);
   mouse_wait(TRUE);
-  outportb(MOUSE_DATA_PORT, status);
+  outb(MOUSE_DATA_PORT, status);
 
   // set mouse to use default settings
   mouse_write(MOUSE_CMD_SET_DEFAULTS);

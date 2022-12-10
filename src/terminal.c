@@ -68,7 +68,7 @@ void reset() {
   int brand = cpuid_info(0);
   // QEMU
   if (brand == BRAND_QEMU)
-    outportb(0x64, 0xFE);
+    outb(0x64, 0xFE);
 }
 
 char buffer[255];
