@@ -12,7 +12,7 @@
 #include "terminal.h"
 #include "timer.h"
 
-void kmain()
+void kmain(void)
 {
   gdt_init();
   idt_init();
