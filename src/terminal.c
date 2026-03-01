@@ -13,7 +13,7 @@
 
 bool_t is_echo(char *b)
 {
-  if ((b[0] == 'e') && (b[1] == 'c') && (b[2] == 'h') && (b[3] == 'o'))
+  if (b[0] == 'e' && b[1] == 'c' && b[2] == 'h' && b[3] == 'o')
     if (b[4] == ' ' || b[4] == '\0')
       return TRUE;
   return FALSE;
