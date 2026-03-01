@@ -1,6 +1,9 @@
 #include "types.h"
 #include "info.h"
 
+#include "console.h"
+#include "string.h"
+
 void __cpuid(uint32_t type, uint32_t *eax, uint32_t *ebx, uint32_t *ecx,
              uint32_t *edx)
 {
@@ -11,17 +14,28 @@ void __cpuid(uint32_t type, uint32_t *eax, uint32_t *ebx, uint32_t *ecx,
 
 int cpuid_info(int print)
 {
-    uint32_t brand[12];
+    char brand[49];
     uint32_t eax, ebx, ecx, edx;
-    uint32_t type;
 
     memset(brand, 0, sizeof(brand));
-    __cpuid(0x80000002, (uint32_t *)brand + 0x0, (uint32_t *)brand + 0x1,
-            (uint32_t *)brand + 0x2, (uint32_t *)brand + 0x3);
-    __cpuid(0x80000003, (uint32_t *)brand + 0x4, (uint32_t *)brand + 0x5,
-            (uint32_t *)brand + 0x6, (uint32_t *)brand + 0x7);
-    __cpuid(0x80000004, (uint32_t *)brand + 0x8, (uint32_t *)brand + 0x9,
-            (uint32_t *)brand + 0xa, (uint32_t *)brand + 0xb);
+
+    __cpuid(0x80000002, &eax, &ebx, &ecx, &edx);
+    ((uint32_t*)brand)[0] = eax;
+    ((uint32_t*)brand)[1] = ebx;
+    ((uint32_t*)brand)[2] = ecx;
+    ((uint32_t*)brand)[3] = edx;
+
+    __cpuid(0x80000003, &eax, &ebx, &ecx, &edx);
+    ((uint32_t*)brand)[4] = eax;
+    ((uint32_t*)brand)[5] = ebx;
+    ((uint32_t*)brand)[6] = ecx;
+    ((uint32_t*)brand)[7] = edx;
+
+    __cpuid(0x80000004, &eax, &ebx, &ecx, &edx);
+    ((uint32_t*)brand)[8]  = eax;
+    ((uint32_t*)brand)[9]  = ebx;
+    ((uint32_t*)brand)[10] = ecx;
+    ((uint32_t*)brand)[11] = edx;
 
     if (print)
     {
