@@ -12,18 +12,17 @@
 #include "terminal.h"
 #include "timer.h"
 
-void kmain(void)
-{
-  gdt_init();
-  idt_init();
-  timer_init();
+void kmain(void) {
+    gdt_init();
+    idt_init();
+    timer_init();
 
-  console_init(COLOR_WHITE, COLOR_BLACK);
+    console_init(COLOR_WHITE, COLOR_BLACK);
 
-  LOG_INFO("Initializing coderynxOS...");
-  LOG_INFO("Boot successful");
+    LOG_INFO("Initializing coderynxOS...");
+    LOG_INFO("Boot successful");
 
-  keyboard_init();
+    keyboard_init();
 
-  term_start();
+    term_start();
 }

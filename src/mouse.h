@@ -18,18 +18,20 @@
 #define MOUSE_DATA_PORT 0x60
 
 typedef struct {
-  uint8_t left_button : 1;
-  uint8_t right_button : 1;
-  uint8_t middle_button : 1;
-  uint8_t always_1 : 1;
-  uint8_t x_sign : 1;
-  uint8_t y_sign : 1;
-  uint8_t x_overflow : 1;
-  uint8_t y_overflow : 1;
+    uint8_t left_button: 1;
+    uint8_t right_button: 1;
+    uint8_t middle_button: 1;
+    uint8_t always_1: 1;
+    uint8_t x_sign: 1;
+    uint8_t y_sign: 1;
+    uint8_t x_overflow: 1;
+    uint8_t y_overflow: 1;
 } MOUSE_STATUS;
 
 void mouse_init();
+
 int mouse_getx();
+
 int mouse_gety();
 
 #endif

@@ -13,10 +13,8 @@ void shutdown() {
     }
 }
 
-static void i8042_wait_input_empty(void)
-{
-    for (uint32_t i = 0; i < 100000; i++)
-    {
+static void i8042_wait_input_empty(void) {
+    for (uint32_t i = 0; i < 100000; i++) {
         if ((inb(0x64) & 0x02) == 0)
             return;
     }

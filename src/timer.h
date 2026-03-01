@@ -12,8 +12,8 @@
 #define TIMER_COMMAND_PORT 0x43
 
 typedef struct {
-  uint32_t timeout; // in millisecond, g_ticks in timer.c reaches there
-  void *user;
+    uint32_t timeout; // in millisecond, g_ticks in timer.c reaches there
+    void *user;
 } TIMER_FUNC_ARGS;
 
 typedef void (*TIMER_FUNCTION)(TIMER_FUNC_ARGS *);
@@ -21,14 +21,15 @@ typedef void (*TIMER_FUNCTION)(TIMER_FUNC_ARGS *);
 #define MAXIMUM_TIMER_FUNCTIONS 32
 
 typedef struct {
-  uint32_t current_index;
-  // timer functions to be called when that ticks reached in irq handler
-  TIMER_FUNCTION functions[MAXIMUM_TIMER_FUNCTIONS];
-  // arguments of each above timer functions
-  TIMER_FUNC_ARGS func_args[MAXIMUM_TIMER_FUNCTIONS];
+    uint32_t current_index;
+    // timer functions to be called when that ticks reached in irq handler
+    TIMER_FUNCTION functions[MAXIMUM_TIMER_FUNCTIONS];
+    // arguments of each above timer functions
+    TIMER_FUNC_ARGS func_args[MAXIMUM_TIMER_FUNCTIONS];
 } TIMER_FUNCTION_MANAGER;
 
 void timer_init();
+
 void sleep(int sec);
 
 void timer_register_function(TIMER_FUNCTION function, TIMER_FUNC_ARGS *args);
